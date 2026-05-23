@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 250 250 249;
+  --fg: 9 23 19;
+  --card: 255 255 255;
+  --muted: 100 116 139;
+  --border: 226 232 240;
+}
+
+.dark {
+  --bg: 2 12 9;
+  --fg: 236 253 245;
+  --card: 6 22 17;
+  --muted: 148 163 184;
+  --border: 30 41 59;
+}
+
+@layer base {
+  html, body { @apply h-full; }
+  body {
+    background: rgb(var(--bg));
+    color: rgb(var(--fg));
+    @apply font-sans antialiased;
+  }
+  * { @apply border-[rgb(var(--border))]; }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-xl bg-white/60 dark:bg-pitch-950/60 border border-white/40 dark:border-white/5;
+  }
+  .card {
+    background: rgb(var(--card));
+    @apply rounded-2xl border shadow-card;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 font-medium transition active:scale-[0.98];
+  }
+  .btn-primary {
+    @apply btn bg-pitch-600 text-white hover:bg-pitch-700 shadow-card;
+  }
+  .btn-ghost {
+    @apply btn hover:bg-pitch-50 dark:hover:bg-pitch-900/40;
+  }
+}
+
+::-webkit-scrollbar { @apply w-2 h-2; }
+::-webkit-scrollbar-thumb { @apply bg-pitch-600/40 rounded-full; }
