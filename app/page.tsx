@@ -4,6 +4,7 @@ import { MatchCarousel } from "@/components/home/MatchCarousel";
 import { FanBanter } from "@/components/home/FanBanter";
 import { api } from "@/lib/api";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 30;
 
 export default async function HomePage() {

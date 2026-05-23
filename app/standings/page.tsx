@@ -1,6 +1,7 @@
 import { api } from "@/lib/api";
 import { StandingsClient } from "./StandingsClient";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 120;
 
 export default async function StandingsPage() {

@@ -3,13 +3,20 @@ import type { Match, Standing, PlayerStat } from "@/types";
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
 async function get<T>(path: string, revalidate = 30): Promise<T[]> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 5000);
   try {
-    const res = await fetch(`${BASE}${path}`, { next: { revalidate } });
+    const res = await fetch(`${BASE}${path}`, {
+      next: { revalidate },
+      signal: ctrl.signal,
+    });
     if (!res.ok) return [];
     const json = (await res.json()) as { data?: T[] };
     return json.data ?? [];
   } catch {
     return [];
+  } finally {
+    clearTimeout(timer);
   }
 }
 

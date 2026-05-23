@@ -1,6 +1,7 @@
 import { api } from "@/lib/api";
 import { PredictorClient } from "./PredictorClient";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 60;
 
 export default async function PredictorPage() {
