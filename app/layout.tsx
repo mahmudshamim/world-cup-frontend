@@ -3,6 +3,8 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { BottomNav } from "@/components/layout/BottomNav";
+import { InstallPrompt } from "@/components/layout/InstallPrompt";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "World Cup 2026 — Live Dashboard",
@@ -41,6 +43,8 @@ export default function RootLayout({
         </main>
         <Footer />
         <BottomNav />
+        <InstallPrompt />
+        <Analytics />
       </body>
     </html>
   );

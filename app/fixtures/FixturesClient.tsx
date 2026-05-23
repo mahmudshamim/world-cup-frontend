@@ -6,6 +6,7 @@ import type { Match } from "@/types";
 import { flagUrl, cn, formatDateTime } from "@/lib/utils";
 import { Countdown } from "@/components/match/Countdown";
 import { Dropdown } from "@/components/ui/Dropdown";
+import { MatchDetailModal } from "@/components/match/MatchDetailModal";
 
 const STAGES = [
   "All",
@@ -33,6 +34,7 @@ export function FixturesClient({ matches }: { matches: Match[] }) {
   const [day, setDay] = useState<string>("all");
   const [stage, setStage] = useState<Stage>("All");
   const [group, setGroup] = useState<string>("all");
+  const [selected, setSelected] = useState<Match | null>(null);
 
   const days = useMemo(() => {
     const set = new Set(matches.map((m) => dayKey(m.kickoff)));
@@ -123,21 +125,29 @@ export function FixturesClient({ matches }: { matches: Match[] }) {
             No matches for this filter.
           </div>
         ) : (
-          filtered.map((m) => <MatchCard key={m.id} match={m} />)
+          filtered.map((m) => <MatchCard key={m.id} match={m} onClick={() => setSelected(m)} />)
         )}
       </section>
+
+      <MatchDetailModal match={selected} onClose={() => setSelected(null)} />
     </div>
   );
 }
 
-function MatchCard({ match }: { match: Match }) {
+function MatchCard({ match, onClick }: { match: Match; onClick: () => void }) {
   const isLive = match.status === "live";
   const isDone = match.status === "finished";
   const isUp = match.status === "upcoming";
   const g = matchGroup(match);
 
   return (
-    <article className="group card bg-pitch-950 text-white border-white/5 hover:border-pitch-500/40 hover:-translate-y-0.5 transition-all overflow-hidden flex flex-col">
+    <article
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onClick()}
+      className="group card bg-pitch-950 text-white border-white/5 hover:border-pitch-500/40 hover:-translate-y-0.5 transition-all overflow-hidden flex flex-col cursor-pointer focus:outline-none focus:ring-2 focus:ring-pitch-500/40"
+    >
       <div className="px-4 pt-3 pb-2 flex items-center justify-between">
         <div>
           <p className="text-[9px] font-bold uppercase tracking-wider text-white/50">
